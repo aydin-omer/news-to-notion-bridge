@@ -115,7 +115,8 @@ def add_to_notion(article, summary, category, notion_token, database_id):
     }
 
     resp = requests.post(url, headers=headers, json=payload, timeout=15)
-    resp.raise_for_status()
+    if not resp.ok:
+        raise Exception(f"Notion API error {resp.status_code}: {resp.text}")
 
 
 def main():
